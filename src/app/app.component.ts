@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { LoggingService } from './LoggingService.service';
 import { Persona } from './persona.model';
+import { PersonasService } from './personas.service';
 
 @Component({
   selector: 'app-root',
@@ -8,17 +9,16 @@ import { Persona } from './persona.model';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-
-  constructor(private loggingService: LoggingService){}
-
   titulo = 'Listado de Personas';
-  personas: Persona[] = [
-    new Persona('Jhon Harold', 'Hincapie'),
-    new Persona('Jeimy', 'Rodriguez'),
-  ];
+  personas: Persona[] = [];
 
-  personaAgregada(persona: Persona) {
-    this.personas.push(persona);
-    this.loggingService.enviaMensajeConsola('Hemos agregado a :'+persona._nombre+' al array de personas');
+  constructor(
+    private loggingService: LoggingService,
+    private personasService: PersonasService
+  ) {}
+
+  ngOnInit(): void{
+    this.personas = this.personasService.personas;
   }
+
 }
